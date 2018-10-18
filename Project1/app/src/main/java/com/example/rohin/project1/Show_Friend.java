@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +20,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+
+
 import java.sql.Blob;
 
 public class Show_Friend extends Fragment
 {
     SqlLite myDb;
     Button button;
-    ListView list;
+    RecyclerView list;
     String[] Name;
     String[] DOB;
     byte[][] GetImage;
@@ -33,15 +39,17 @@ public class Show_Friend extends Fragment
     {
         final View rootView = inflater.inflate(R.layout.show_friend, container, false);
         myDb = new SqlLite(getActivity().getApplicationContext());
-        list=(ListView)rootView.findViewById(R.id.list);
+        list=(RecyclerView) rootView.findViewById(R.id.list);
 
         Name = Get_Name();
         DOB = Get_DOB();
         GetImage = GetImage();
 
+        RecyclerView view = rootView.findViewById(R.id.list);
+        Recycler_Veiw_Holder recycle_view = new Recycler_Veiw_Holder(rootView.getContext(),Name,DOB,GetImage);
+        view.setAdapter(recycle_view);
+        view.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
 
-        MyListAdapter customdesign = new MyListAdapter(container.getContext(),Name,DOB,GetImage);
-        list.setAdapter(customdesign);
         return rootView;
     }
 
@@ -107,60 +115,7 @@ public class Show_Friend extends Fragment
 
 }
 
-class MyListAdapter extends ArrayAdapter<String>
-{
-    private String[] Name;
-    private String[] DOB;
-    private byte[][] Image;
 
-    private Activity context;
 
-    public MyListAdapter(Context context,String[] Name,String[] DOB,byte[][] Image)
-    {
-        super(context,R.layout.custom_layout,Name);
-        this.context = (Activity) context;
-        this.Name = Name;
-        this.DOB = DOB;
-        this.Image = Image;
-    }
 
-    @Override
-    public View getView(int position,View convertView,ViewGroup parent)
-    {
-        View v = convertView;
-        ViewHolder view_holder = null;
-
-        if(v==null)
-        {
-            LayoutInflater layoutInflate = context.getLayoutInflater();
-            v = layoutInflate.inflate(R.layout.custom_layout,null,true);
-            view_holder = new ViewHolder(v);
-            v.setTag(view_holder);
-        }
-        else
-        {
-            view_holder = (ViewHolder) v.getTag();
-        }
-
-        Bitmap Images = DbBitmapUtility.getImage(Image[position]);
-        view_holder.Name_tv.setText(Name[position]);
-        view_holder.DOB_tv.setText(DOB[position]);
-        view_holder.Image.setImageBitmap(Images);
-        return v;
-    }
-}
-
-class ViewHolder
-{
-    TextView Name_tv;
-    TextView DOB_tv;
-    ImageView Image;
-
-    ViewHolder(View v)
-    {
-        Name_tv = v.findViewById(R.id.Name);
-        DOB_tv = v.findViewById(R.id.DOB);
-        Image = v.findViewById(R.id.imageView);
-    }
-}
 

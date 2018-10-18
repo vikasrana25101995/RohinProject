@@ -59,12 +59,12 @@
 
             <TextView
                 android:id="@+id/Name"
-                android:layout_width="172dp"
-                android:layout_height="69dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="53dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginEnd="45dp"
                 android:gravity="center"
                 android:text="TextView"
                 android:textSize="@dimen/_20sdp"
@@ -79,6 +79,19 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="3dp"
                 android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/DOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="39dp"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="@dimen/_20sdp"
+                app:layout_constraintTop_toTopOf="parent" />
         </RelativeLayout>
 
 

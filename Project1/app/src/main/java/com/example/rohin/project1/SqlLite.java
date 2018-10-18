@@ -16,21 +16,22 @@ public class SqlLite extends SQLiteOpenHelper
     public static  final String DOB = "DOB";
     public static  final String CONTACT = "Contact";
     private static final String IMAGE = "Image";
+    private static final String SNO = "SNO";
 
     public SqlLite(Context context) //,String name, SQLiteDatabase.CursorFactory factory, int version,DatabaseErrorHandler errorHandler)
     {
-        super(context, DATABASE_NAME, null, 2);
+        super(context, DATABASE_NAME, null, 3);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(("CREATE TABLE " + TABLE_NAME+ "(" +
-                CONTACT+ " INTEGER PRIMARY KEY,"+
+                CONTACT+ " INTEGER,"+
                 FIRST_NAME + " TEXT," +
                 LAST_NAME + " TEXT, " +
                 DOB + " TEXT,"+
-                IMAGE+ " BLOB );"
+                IMAGE+ " BLOB,"+"SNO INTEGER PRIMARY KEY AUTOINCREMENT);"
         ));
     }
 
@@ -69,4 +70,37 @@ public class SqlLite extends SQLiteOpenHelper
         return  res;
     }
 
+    public Integer Delete_Data(int Contact)
+    {
+        String Cont = Integer.toString(Contact);
+        Log.d("CONTACTVALUE",Cont);
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME,"SNO =?", new String[] {Cont});
+    }
+
+    public Cursor getData(String SNO)
+    {
+        int sno = Integer.parseInt(SNO);
+        int SSNO = sno+1;
+        //Log.d("STRINGSSNO",SSNO);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res =  db.rawQuery(" Select * from "+TABLE_NAME+" where SNO = "+SSNO+";",null);
+        return  res;
+    }
+
+    public boolean Update_Data(String First_Name,String Last_Name,String Dob,String Contact,byte[] Image,String pos)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content_value = new ContentValues();
+        content_value.put(FIRST_NAME,First_Name);
+        content_value.put(LAST_NAME,Last_Name);
+        content_value.put(DOB,Dob);
+        content_value.put(CONTACT,Contact);
+        content_value.put(IMAGE,Image);
+
+        int index =  Integer.parseInt(pos);
+        String Index = Integer.toString(index+1);
+        db.update(TABLE_NAME,content_value,"SNO = ?", new String[] {Index});
+        return  true;
+    }
 }

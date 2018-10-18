@@ -79,7 +79,8 @@ public class Add_Friend extends Fragment
             }
         });
 
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
+        constraintLayout.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

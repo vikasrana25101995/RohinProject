@@ -5,10 +5,12 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/backgrounf"
+    >
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
+        android:id="@+id/eprofile_image"
         android:layout_width="172dp"
         android:layout_height="178dp"
         android:layout_marginTop="@dimen/_40sdp"
@@ -40,13 +42,11 @@
         android:layout_width="@dimen/_189sdp"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginBottom="@dimen/_22sdp"
-        android:layout_marginTop="@dimen/_10sdp"
         android:background="#F95F62"
-        android:text="Submit"
+        android:text="Update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-         />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/inputLayout"
@@ -70,7 +70,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/FirstNameTextBox"
+                android:id="@+id/eFirstNameTextBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8sdp"
@@ -82,7 +82,7 @@
                 android:textSize="@dimen/_16sdp" />
 
             <EditText
-                android:id="@+id/LastNameTextBox"
+                android:id="@+id/eLastNameTextBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8sdp"
@@ -107,7 +107,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/DOBTextBox"
+                android:id="@+id/eDOBTextBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8sdp"
@@ -115,12 +115,11 @@
                 android:ems="10"
                 android:gravity="center_horizontal|center_vertical"
                 android:hint="Select Date"
-                android:inputType="date"
                 android:textSize="@dimen/_16sdp"
                 android:focusable="false"/>
 
             <EditText
-                android:id="@+id/ContactTextBox"
+                android:id="@+id/eContactTextBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8sdp"
@@ -128,7 +127,7 @@
                 android:ems="10"
                 android:gravity="center_horizontal|center_vertical"
                 android:hint="Contact"
-                android:inputType="number"
+                android:inputType="textPersonName"
                 android:textSize="@dimen/_16sdp" />
         </LinearLayout>
     </LinearLayout>

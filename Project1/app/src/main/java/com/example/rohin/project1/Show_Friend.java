@@ -22,7 +22,7 @@ public class Show_Friend extends Fragment
     RecyclerView list;
     String[] Name;
     String[] DOB;
-    int[] Contact;
+    String[] Contact;
     byte[][] GetImage;
 
 
@@ -51,7 +51,7 @@ public class Show_Friend extends Fragment
         String [] Name_Arr = new String[res.getCount()];
         String [] DOB_Arr = new String[res.getCount()];
         byte [][] Image_Arr = new byte[res.getCount()][];
-        int [] Contact_Arr = new int[res.getCount()];
+        String [] Contact_Arr = new String[res.getCount()];
 
         if(res.getCount()!=0)
         {
@@ -62,7 +62,7 @@ public class Show_Friend extends Fragment
                   Name_Arr[i] = res.getString(1)+" "+res.getString(2);
                   DOB_Arr[i] = res.getString(3);
                   Image_Arr[i] = res.getBlob(4);
-                  Contact_Arr[i] = res.getInt(0);
+                  Contact_Arr[i] = res.getString(0);
             }
 
             Name = Name_Arr;
@@ -71,6 +71,15 @@ public class Show_Friend extends Fragment
             Contact = Contact_Arr;
         }
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+        {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 
 }

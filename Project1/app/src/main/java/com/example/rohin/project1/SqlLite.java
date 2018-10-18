@@ -16,22 +16,21 @@ public class SqlLite extends SQLiteOpenHelper
     public static  final String DOB = "DOB";
     public static  final String CONTACT = "Contact";
     private static final String IMAGE = "Image";
-    private static final String SNO = "SNO";
 
     public SqlLite(Context context) //,String name, SQLiteDatabase.CursorFactory factory, int version,DatabaseErrorHandler errorHandler)
     {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(("CREATE TABLE " + TABLE_NAME+ "(" +
-                CONTACT+ " INTEGER,"+
+                CONTACT+ " INTEGER PRIMARY KEY ,"+
                 FIRST_NAME + " TEXT," +
                 LAST_NAME + " TEXT, " +
                 DOB + " TEXT,"+
-                IMAGE+ " BLOB,"+"SNO INTEGER PRIMARY KEY AUTOINCREMENT);"
+                IMAGE+ " BLOB);"
         ));
     }
 
@@ -66,29 +65,25 @@ public class SqlLite extends SQLiteOpenHelper
     public Cursor getAllData()
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery(" Select * from "+TABLE_NAME,null);
+        Cursor res =  db.rawQuery(" Select * from "+TABLE_NAME+";",null);
         return  res;
     }
 
-    public Integer Delete_Data(int Contact)
+    public Integer Delete_Data(String l_Contact)
     {
-        String Cont = Integer.toString(Contact);
-        Log.d("CONTACTVALUE",Cont);
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME,"SNO =?", new String[] {Cont});
+        return db.delete(TABLE_NAME,"Contact =?", new String[] {l_Contact});
     }
 
-    public Cursor getData(String SNO)
+    public Cursor getData(String l_Contact)
     {
-        int sno = Integer.parseInt(SNO);
-        int SSNO = sno+1;
-        //Log.d("STRINGSSNO",SSNO);
+        Log.d("L contact",l_Contact);
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery(" Select * from "+TABLE_NAME+" where SNO = "+SSNO+";",null);
+        Cursor res =  db.rawQuery(" Select * from "+TABLE_NAME+" where "+CONTACT+"='"+l_Contact+"';",null);
         return  res;
     }
 
-    public boolean Update_Data(String First_Name,String Last_Name,String Dob,String Contact,byte[] Image,String pos)
+    public boolean Update_Data(String First_Name,String Last_Name,String Dob,String Contact,byte[] Image, String PrevCont)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_value = new ContentValues();
@@ -98,9 +93,7 @@ public class SqlLite extends SQLiteOpenHelper
         content_value.put(CONTACT,Contact);
         content_value.put(IMAGE,Image);
 
-        int index =  Integer.parseInt(pos);
-        String Index = Integer.toString(index+1);
-        db.update(TABLE_NAME,content_value,"SNO = ?", new String[] {Index});
+        db.update(TABLE_NAME,content_value,"Contact = ?", new String[] {PrevCont});
         return  true;
     }
 }

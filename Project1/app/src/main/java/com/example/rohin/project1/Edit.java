@@ -36,7 +36,6 @@ public class Edit extends AppCompatActivity
     TextView DOB;
     TextView Contact;
     CircleImageView Image;
-    String SNO;
     Bitmap Images;
     Calendar myCalendar = Calendar.getInstance();
 
@@ -83,24 +82,22 @@ public class Edit extends AppCompatActivity
         Contact = findViewById(R.id.eContactTextBox);
         update = findViewById(R.id.button2);
 
-        if(getIntent().hasExtra("SNO"))
+        if(getIntent().hasExtra("Contact"))
         {
-            String SNO = getIntent().getStringExtra("SNO");
-            Log.d("GETTING DATA",SNO);
-            setData(SNO);
+            String Contact = getIntent().getStringExtra("Contact");
+            setData(Contact);
             GetImage();
-            Update_Data();
+            Update_Data(Contact);
 
         }
     }
 
-    private void setData(String SNo)
+    private void setData(String l_contact)
     {
-        myDb = new SqlLite(this.getApplicationContext());
+        myDb = new SqlLite(getApplicationContext());
 
-        Cursor res = myDb.getData(SNo);
+        Cursor res = myDb.getData(l_contact);
         res.moveToNext();
-        Log.d("CHECKING123123",res.getString(5));
         byte[] getImage = res.getBlob(4);
         Log.d("IMAGEDATA",getImage.toString());
         Images = DbBitmapUtility.getImage(getImage);
@@ -110,10 +107,9 @@ public class Edit extends AppCompatActivity
         LastName.setText(res.getString(2));
         DOB.setText(res.getString(3));
         Contact.setText(res.getString(0));
-        SNO = SNo;
     }
 
-    private void Update_Data()
+    private void Update_Data(final String Prev_Contact)
     {
         update.setOnClickListener(new View.OnClickListener()
         {
@@ -121,7 +117,7 @@ public class Edit extends AppCompatActivity
             public void onClick(View v)
             {
                 byte[] Image =  DbBitmapUtility.getBytes(Images);
-                boolean result = myDb.Update_Data(FirstName.getText().toString(),LastName.getText().toString(), DOB.getText().toString(),Contact.getText().toString(),Image,SNO);
+                boolean result = myDb.Update_Data(FirstName.getText().toString(),LastName.getText().toString(), DOB.getText().toString(),Contact.getText().toString(),Image,Prev_Contact);
                 if(result)
                 {
                     Toast.makeText(v.getContext(),"Data Updated Sucessfully",Toast.LENGTH_LONG).show();

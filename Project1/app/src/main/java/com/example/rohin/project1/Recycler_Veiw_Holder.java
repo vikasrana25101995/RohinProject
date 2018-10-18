@@ -21,7 +21,7 @@ public class Recycler_Veiw_Holder extends RecyclerView.Adapter<Recycler_Veiw_Hol
 
     private String[] mName;
     private String[] mDOB;
-    private int[] mContact;
+    private String[] mContact;
     private byte[][] mImage;
     private Context mcontext;
     SqlLite myDb;
@@ -29,7 +29,7 @@ public class Recycler_Veiw_Holder extends RecyclerView.Adapter<Recycler_Veiw_Hol
     CircleImageView Edit_Button;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public Recycler_Veiw_Holder(Context context, String[] Name, String[] DOB, byte[][] Image, int[] Contact)
+    public Recycler_Veiw_Holder(Context context, String[] Name, String[] DOB, byte[][] Image, String[] Contact)
     {
         this.mcontext = context;
         this.mName = Name;
@@ -91,11 +91,12 @@ public class Recycler_Veiw_Holder extends RecyclerView.Adapter<Recycler_Veiw_Hol
             public void onClick(View v)
             {
                 Intent intent = new Intent(mcontext,Edit.class);
-                intent.putExtra("SNO",Integer.toString(index));
+                intent.putExtra("Contact",mContact[index]);
                 mcontext.startActivity(intent);
             }
         });
     }
+
 
     //----------CLASS-----
 
